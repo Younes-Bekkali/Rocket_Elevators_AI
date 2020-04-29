@@ -1,0 +1,67 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "rocket elevators",
+      "intents": [
+        {
+          "name": "GetLaunchIntent",
+          "slots": [],
+          "samples": [
+            "hi",
+            "hello"
+          ]
+        },
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": [
+            "help"
+          ]
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "GetStatusIntent",
+          "slots": [
+            {
+              "name": "id",
+              "type": "AMAZON.NUMBER"
+            }
+          ],
+          "samples": [
+            "Elevator {id} status",
+            "what is the status of elevator {id}",
+            "Can you tell me the status of elevator {id}"
+          ]
+        },
+        
+        {
+          "name": "GetRemoteDataIntent",
+          "slots": [],
+          "samples": [
+            "a briefing please",
+            "what is the rocket elevators situation",
+            "what is the current situation at rocket elevators",
+            "whats popping jimbo",
+            "how rocket elevators is going",
+            "what happen at rocket elevators",
+            "what is going on"
+          ]
+        },
+        
+        
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": []
+        }
+      ],
+      "types": []
+    }
+  },
+  "version": "7"
+}
