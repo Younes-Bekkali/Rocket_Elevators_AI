@@ -26,43 +26,30 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
     }
     // with const something = agent.parameters.something we can extract the VALUE what PARAMETER holds.
     function RocketElevators(agent){
-        const elevators = agent.parameters.elevators;
-        agent.add('Here is the list of elevators ${elevators}');
+        // const elevators = agent.parameters.elevators;
+        // agent.add('Here is the list of elevators ${elevators}');
         // axios.get will call the URL and return the response. We can insert this in the end: /Elevators/${elevator_id} => whatever value the variable hold will be inserted
         return axios.get('https://rocketelevatorsrestapi.herokuapp.com/api/Elevators')
         // .then is a Promise, when we receive the result, execute this function
         .then((result) => {
             console.log(result.data);
-            agent.add(result.data);
-    //         // // .map is a function which looks through of the objects/elements of an array => elevators object
-    //         // result.data.map(elevatorsObj => {
-    //         //     // this will extract the "id" from the result array
-    //         //     console.log(elevatorsObj.id);
-    //         //     agent.add(elevatorsObj.id);
-    //         // });
+            var nb_elev = result.data.length;
+            agent.add('There are currently elevators ' + nb_elev + ' deployed. WOow');
+
+    // //         // // .map is a function which looks through of the objects/elements of an array => elevators object
+    // //         // result.data.map(elevatorsObj => {
+    // //         //     // this will extract the "id" from the result array
+    // //         //     console.log(elevatorsObj.id);
+    // //         //     agent.add(elevatorsObj.id);
+    // //         // });
         });
     }
-
-    // function getElevators(agent){
-    //     var elevators = {};
-    //     // axios.get will call the URL and return the response. 
-    //     return axios.get('https://rocketelevatorsrestapi.herokuapp.com/api/Elevators')
-    //     // .then is a Promise, when we receive the result, execute function if it has
-    //     .then(result => result.json())
-    //     .then((result) => {
-    //         console.log(result.data);
-    //         agent.add(result.data);
-    //         var nb_elev = result.lenght;
-    //         agent.add('There are currently' + nb_elev + 'elevators deployed. WOow');
-    //     })
-    // }
 
   // Run the proper function handler based on the matched Dialogflow intent name
   let intentMap = new Map();
   intentMap.set('Default Welcome Intent', welcome);
   intentMap.set('Default Fallback Intent', fallback);
   intentMap.set('RocketElevators', RocketElevators);  
-//   intentMap.set('RocketElevators', getElevators);
   agent.handleRequest(intentMap);
 });
 
@@ -78,3 +65,14 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
 //       });
 //     });
 //   }
+
+// REQUIREMENT:
+// The dialogue must be initiated in Slack via an initial brief:
+// Greetings
+// There are currently XXX elevators deployed in the XXX buildings of your XXX customers
+// Currently, XXX elevators are not in Running Status and are being serviced
+// XXX Batteries are deployed across XXX cities
+// On another note you currently have XXX quotes awaiting processing
+// You also have XXX leads in your contact requests
+  
+// What is the status of Elevator XXX?
