@@ -1,3 +1,5 @@
+// https://decoupledkit-react.readthedocs.io/en/develop/react-chatbot/
+
 // import the graphql client
 const graphqlFetch = require('graphql-fetch')('http://path-to-graphql.com/graphql')
 
