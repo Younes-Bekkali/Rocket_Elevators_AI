@@ -27,7 +27,7 @@ const parameters = request.body.queryResult.parameters;
 
 // function to get the data with graphQL API
   function getBrief (CloudFnResponse){
-  console.log('In Function Get Brief');
+    console.log('In Function Get Brief');
     // var answer = {};
       // https.get(url, res => {
       //   res.setEncoding("utf8");
@@ -58,7 +58,7 @@ const parameters = request.body.queryResult.parameters;
     `
       return graphqlFetch(query).then(pkmn => {
       return sendResponse(pkmn)
-    })
+      })
   }
 
   // Here is the message to return to the chat
@@ -72,9 +72,6 @@ const parameters = request.body.queryResult.parameters;
   CloudFnResponse.send(buildChatResponse(chat));
   });
 
-});
-
-}
 function buildChatResponse(chat) {
   return JSON.stringify({"fulfillmentText": chat});
 }
