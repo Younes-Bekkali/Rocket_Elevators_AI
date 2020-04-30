@@ -43,7 +43,7 @@ const parameters = request.body.queryResult.parameters;
 
   'input.elvator_brief: () => {
     const query = `
-      query chatbot {
+      query {
         chatbot {
           nb_elevators
           nb_buildings
@@ -86,3 +86,23 @@ function buildChatResponse(chat) {
 // You also have XXX leads in your contact requests
   
 // What is the status of Elevator XXX?
+
+
+fetch('/graphql', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+  },
+  body: JSON.stringify({
+    query,
+    variables: {
+      input: {
+        author,
+        content,
+      }
+    }
+  })
+})
+  .then(r => r.json())
+  .then(data => console.log('data returned:', data));
