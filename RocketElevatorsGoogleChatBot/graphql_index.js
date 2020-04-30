@@ -41,7 +41,7 @@ const parameters = request.body.queryResult.parameters;
       //   });
       // });
 
-  'input.elvator_brief: () => {
+  'input.elvator_brief': () => {
     const query = `
       query {
         chatbot {

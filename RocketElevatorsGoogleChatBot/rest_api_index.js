@@ -107,27 +107,6 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   agent.handleRequest(intentMap);
 });
 
-
-//   function getActiveElevators(agent){
-//     const status= agent.parameters.status;
-//     axios.get(`'https://rocketelevatorsrestapi.herokuapp.com/api/Elevators/${status}`)
-//     .then((result) => {
-//       result.data.map(statusObj => {
-//         var id = statusObj.id;
-//         var building = statusObj.building_type;
-//         agent.add(`Here are all the ${status} elevators of building ${id}(${building} building)`);
-//       });
-//     });
-//   }
-
-// // .map is a function which looks through of the objects/elements of an array => elevators object
-// result.data.map(elevatorsObj => {
-//     // this will extract the 'id' from the result array
-//     console.log(elevatorsObj.id);
-//     agent.add(elevatorsObj.id);
-// });
-
-
 // REQUIREMENT:
 // The dialogue must be initiated in Slack via an initial brief:
 // Greetings
@@ -137,11 +116,14 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
 // On another note you currently have XXX quotes awaiting processing
 // You also have XXX leads in your contact requests
   
+// agent.add('Hello, Here is a little brief to you about Rocket Elevators: There are currently ' + response.nb_elevators + ' elevators deployed in the ' + response.nb_buildings + ' buildings of your ' + response.nb_customers + ' customers. Currently, ' + response.nb_not_active_elevators + ' elevators are not in "Running Status" and are being serviced. ' + response.nb_batteries + ' batteries are deployed across ' + response.nb_cities + ' cities. On another note you currently have ' + response.nb_quotes + ' quotes awaiting processing. You also have ' + response.nb_leads + ' in your contact requests. Have a wonderful day! Rocket Team');
+
 // What is the status of Elevator 1?
 
-// agent.add('Hello, Here is a little brief to you about Rocket Elevators:',
-//     'There are currently ' + nb_elevators + ' elevators deployed in the ' + nb_buildings + ' buildings of your ' + nb_customers + ' customers.',
-//     'Currently, ' + nb_not_active_elevators + ' elevators are not in Running Status and are being serviced.',
-//     nb_batteries + ' batteries are deployed across ' + nb_cities + ' cities.',
-//     'On another note you currently have ' + nb_quotes + ' quotes awaiting processing.',
-//     'You also have ' + nb_leads + ' in your contact requests');
+// MANUAL
+// // .map is a function which looks through of the objects/elements of an array => elevators object
+// result.data.map(elevatorsObj => {
+//     // this will extract the 'id' from the result array
+//     console.log(elevatorsObj.id);
+//     agent.add(elevatorsObj.id);
+// });
