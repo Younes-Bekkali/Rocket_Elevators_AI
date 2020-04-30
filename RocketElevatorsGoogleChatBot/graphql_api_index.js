@@ -30,8 +30,8 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
         axios({
             url: 'https://rocketelevatorgraphql.herokuapp.com/graphql',
             method: 'get',
-            data: {
-                query: `
+            data: JSON.stringify({
+            query: `
                 query {
                     chatbot {
                         nb_elevators
@@ -45,11 +45,12 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
                         }
                     }
                 `
-            }
+            })
 
           }).then((result) => {
             console.log(result.data);
-           return agent.add('Hello, Here is a little brief to you about Rocket Elevators: There are currently '  + result.nb_elevators + ' elevators deployed in the '  + result.nb_buildings + ' buildings of your '  + result.nb_customers + ' customers. Currently, '  + result.nb_not_active_elevators + ' elevators are not in "Running Status" and are being serviced. '  + result.nb_batteries + ' batteries are deployed across '  + result.nb_cities + ' cities. On another note you currently have '  + result.nb_quotes + ' quotes awaiting processing. You also have '  + result.nb_leads + ' in your contact requests. Have a wonderful day! Rocket Team');
+            var response = result.query
+            agent.add('Hello, Here is a little brief to you about Rocket Elevators: There are currently '  + response.nb_elevators + ' elevators deployed in the '  + result.nb_buildings + ' buildings of your '  + result.nb_customers + ' customers. Currently, '  + result.nb_not_active_elevators + ' elevators are not in "Running Status" and are being serviced. '  + result.nb_batteries + ' batteries are deployed across '  + result.nb_cities + ' cities. On another note you currently have '  + result.nb_quotes + ' quotes awaiting processing. You also have '  + result.nb_leads + ' in your contact requests. Have a wonderful day! Rocket Team');
 
           });
     }
