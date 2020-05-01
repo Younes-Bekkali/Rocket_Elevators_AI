@@ -27,10 +27,10 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
 
     // with const something = agent.parameters.something we can extract the VALUE what PARAMETER holds.
     function RocketElevators(agent){
-        axios({
+        return axios({
             url: 'https://rocketelevatorgraphql.herokuapp.com/graphql',
             method: 'get',
-            data: JSON.stringify({
+            data: ({
             query: `
                 query {
                     chatbot {
@@ -46,11 +46,11 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
                     }
                 `
             })
-
-          }).then((result) => {
+          })
+          .then(result => {
             console.log(result.data);
-            var response = result.query
-            agent.add('Hello, Here is a little brief to you about Rocket Elevators: There are currently '  + response.nb_elevators + ' elevators deployed in the '  + result.nb_buildings + ' buildings of your '  + result.nb_customers + ' customers. Currently, '  + result.nb_not_active_elevators + ' elevators are not in "Running Status" and are being serviced. '  + result.nb_batteries + ' batteries are deployed across '  + result.nb_cities + ' cities. On another note you currently have '  + result.nb_quotes + ' quotes awaiting processing. You also have '  + result.nb_leads + ' in your contact requests. Have a wonderful day! Rocket Team');
+            var response = result.data.data.chatbot;
+            agent.add('Hello, Here is a little brief to you about Rocket Elevators: There are currently '  + response.nb_elevators + ' elevators deployed in the ' + response.nb_buildings + ' buildings of your ' + response.nb_customers + ' customers. Currently, ' + response.nb_not_active_elevators + ' elevators are not in "Running Status" and are being serviced. ' + response.nb_batteries + ' batteries are deployed across ' + response.nb_cities + ' cities. On another note you currently have ' + response.nb_quotes + ' quotes awaiting processing. You also have ' + response.nb_leads + ' in your contact requests. Have a wonderful day! Rocket Team');
 
           });
     }
@@ -84,7 +84,7 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
 // On another note you currently have XXX quotes awaiting processing
 // You also have XXX leads in your contact requests
   
-// agent.add('Hello, Here is a little brief to you about Rocket Elevators: There are currently '  + result.nb_elevators + ' elevators deployed in the '  + result.nb_buildings + ' buildings of your '  + result.nb_customers + ' customers. Currently, '  + result.nb_not_active_elevators + ' elevators are not in "Running Status" and are being serviced. '  + result.nb_batteries + ' batteries are deployed across '  + result.nb_cities + ' cities. On another note you currently have '  + result.nb_quotes + ' quotes awaiting processing. You also have '  + result.nb_leads + ' in your contact requests. Have a wonderful day! Rocket Team');
+// agent.add('Hello, Here is a little brief to you about Rocket Elevators: There are currently ' + response.nb_elevators + ' elevators deployed in the ' + response.nb_buildings + ' buildings of your ' + response.nb_customers + ' customers. Currently, ' + response.nb_not_active_elevators + ' elevators are not in "Running Status" and are being serviced. ' + response.nb_batteries + ' batteries are deployed across ' + response.nb_cities + ' cities. On another note you currently have ' + response.nb_quotes + ' quotes awaiting processing. You also have ' + response.nb_leads + ' in your contact requests. Have a wonderful day! Rocket Team');
 
 // What is the status of Elevator 1?
 
