@@ -57,21 +57,77 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
 
     function ElevatorStatus(agent){
         const id = agent.parameters.elevator_id;
-        // axios.get will call the URL and return the response. We can insert this in the end: /Elevators/${elevator_id} => whatever value the variable hold will be inserted
-        return axios.get('https://rocketelevatorsrestapi.herokuapp.com/api/Elevators/'+ id)
-            // .then is a Promise, when we receive the result, execute this function
-            .then((result) => {
-                console.log(result.data);
-                var status = result.data.status;
-                agent.add('The status of the elevator ' + id + ' is ' + status);
+        return axios({
+            url: 'https://rocketelevatorgraphql.herokuapp.com/graphql',
+            method: 'get',
+            data: ({
+            query: `
+                query ($id: Int!) {
+                    chatbot2(id: $id) {
+                        building_type
+                        elevator_model
+                        elevator_notes
+                        elevator_status
+                        elevator_information
+                        elevator_serial_number
+                        elevator_commissioning_date
+                        elevator_last_inspection_date
+                        elevator_inspection_certificate
+                        created_at
+                        updated_at
+                        column_id                        
+                        }
+                    }`,
+            variables: {id: id},
+            })
+          })
+          .then(result => {
+            console.log(result.data);
+            var response = result.data.data.chatbot2;
+            agent.add('The status of the elevator ' + id + ' is ' + response.elevator_status);
             });
     }
+
+    function ElevatorNotes(agent){
+        const id = agent.parameters.elevator_id;
+        return axios({
+            url: 'https://rocketelevatorgraphql.herokuapp.com/graphql',
+            method: 'get',
+            data: ({
+            query: `
+                query ($id: Int!) {
+                    chatbot2(id: $id) {
+                        building_type
+                        elevator_model
+                        elevator_notes
+                        elevator_status
+                        elevator_information
+                        elevator_serial_number
+                        elevator_commissioning_date
+                        elevator_last_inspection_date
+                        elevator_inspection_certificate
+                        created_at
+                        updated_at
+                        column_id                        
+                        }
+                    }`,
+            variables: {id: id},
+            })
+          })
+          .then(result => {
+            console.log(result.data);
+            var response = result.data.data.chatbot2;
+            agent.add('Your colleague left this notes: "' + response.elevator_notes + '" of the elevator ' + id + ' with certificate ' + response.elevator_inspection_certificate);
+            });
+    }
+
   // Run the proper function handler based on the matched Dialogflow intent name
   let intentMap = new Map();
   intentMap.set('Default Welcome Intent', welcome);
   intentMap.set('Default Fallback Intent', fallback);
   intentMap.set('RocketElevators', RocketElevators);
   intentMap.set('ElevatorStatus', ElevatorStatus);  
+  intentMap.set('ElevatorNotes', ElevatorNotes);  
   agent.handleRequest(intentMap);
 });
 
