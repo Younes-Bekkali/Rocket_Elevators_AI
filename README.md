@@ -4,9 +4,7 @@ Project of Mykee, Maxime, Alexis, Ukeme, Younes, Agnes
 
 ### DIFFERENT API SOLUTIONS
 
-We created the Chatbot and Alexa with **REST API** and **GRAPHQL API**
-2 agents (basically the face of your bot) were set in DialogFlow to deploy the different code.
-
+We created the Chatbot with **REST API** and **GRAPHQL API** and and Alexa with **REST API**
 
 ## Alexa's Briefing
 
@@ -44,7 +42,10 @@ PATH FOR GRAPHQL API ```RocketElevatorsGoogleChatBot/graphql_api_index.js```
 
 PATH FOR REST API ```RocketElevatorsGoogleChatBot/rest_api_index.js```
 
+
 ### SLACK CHANNELS ON **Rocket Elevators**
+
+2 agents (basically the face of your bot) were set in DialogFlow to deploy the different code:
 
 GRAPHQL API SLACK CHANNEL: @rocketelevators
 
